@@ -14,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+use App\Http\Controllers\Api\AuthController;
+// (Pastikan use ProductController yang kemarin tetap ada)
+
+// Rute untuk Publik (Tidak perlu tiket/login)
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+// Rute yang butuh tiket/login (Kita masukkan produk ke sini sementara biar aman)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('products', App\Http\Controllers\Api\ProductController::class);
 });
-use App\Http\Controllers\Api\ProductController;
-Route::apiResource('products', ProductController::class);

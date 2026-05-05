@@ -9,17 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-    Schema::create('products', function (Blueprint $table) {
-        $table->id();
-        $table->string('name'); // Contoh: Pelet Ikan Cupang Mutiara
-        $table->text('description')->nullable();
-        $table->integer('price');
-        $table->integer('stock');
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('personal_access_tokens', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('tokenable');
+            $table->string('name');
+            $table->string('token', 64)->unique();
+            $table->text('abilities')->nullable();
+            $table->timestamp('last_used_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

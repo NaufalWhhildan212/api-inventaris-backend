@@ -25,3 +25,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('products', App\Http\Controllers\Api\ProductController::class);
 });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('products', App\Http\Controllers\Api\ProductController::class);
+    
+    // Rute pemesanan barang
+    Route::post('checkout', [App\Http\Controllers\Api\OrderController::class, 'checkout']);
+});
